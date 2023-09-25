@@ -1,6 +1,11 @@
 package model
 
-import "gorm.io/gorm"
+import (
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
+	"time"
+)
 
 type User struct {
 	gorm.Model
@@ -19,6 +24,11 @@ type UserUpdateRequest struct {
 	Password string `json:"password" validate:"required"`
 }
 
+type LoginRequest struct {
+	Email    string `json:"email" validate:"required,email"`
+	Password string `json:"password" validate:"required"`
+}
+
 type UserResponse struct {
 	ID        uint   `json:"id"`
 	Email     string `json:"email"`
@@ -26,9 +36,33 @@ type UserResponse struct {
 	CreatedAt int64  `json:"createdAt"`
 }
 
-func NewUserFromStoreRequest(request *UserStoreRequest) *User {
-	// hash
-	return &User{Email: request.Email, Name: request.Name, Password: request.Password}
+type LoginResponse struct {
+	Token string `json:"token"`
+}
+
+func NewUserFromStoreRequest(request UserStoreRequest) (*User, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(request.Password), 14)
+	return &User{Email: request.Email, Name: request.Name, Password: string(bytes)}, err
+}
+
+func CheckPasswordHas(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
+}
+
+func CreateToken(id uint, email string) (string, error) {
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["id"] = id
+	claims["email"] = email
+	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
+
+	tokenString, err := token.SignedString([]byte("secret"))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }
 
 func NewUserResponseFromModel(user *User) *UserResponse {

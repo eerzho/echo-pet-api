@@ -9,12 +9,13 @@ import (
 func RegisterRoutes(app *echo.Echo) {
 	routesV1 := app.Group("/api/v1")
 
-	//postController := &controller.PostController{}
-	//routesV1.GET("/posts", postController.Index)
-	//routesV1.POST("/posts", postController.Store, middleware.JWTMiddleware())
-	//routesV1.GET("/posts/:id", postController.Show)
-	//routesV1.PUT("/posts/:id", postController.Update, middleware.JWTMiddleware())
-	//routesV1.DELETE("/posts/:id", postController.Delete, middleware.JWTMiddleware())
+	postController := controller.NewPostController()
+	routesV1.GET("/posts", postController.Index)
+	routesV1.POST("/posts", postController.Store)
+	routesV1.GET("/posts/:id", postController.Show)
+	routesV1.GET("/posts/slug/:slug", postController.ShowBySlug)
+	routesV1.PUT("/posts/:id", postController.Update)
+	routesV1.DELETE("/posts/:id", postController.Delete)
 
 	userController := controller.NewUserController()
 	routesV1.GET("/users", userController.Index, middleware.JWTMiddleware())

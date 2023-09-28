@@ -1,10 +1,10 @@
-_id: req_10e115e04f574c7fb3a67dab16d51b9d
+_id: req_55a4547cf5be477a96cd327ca1f4f46d
 type: Request
-parentId: wrk_93ae1389158f46648c95315d68c2bd3b
-modified: 1695498722821
-created: 1695497190197
-url: http://localhost:8080/api/v1/posts/4
-name: New Request
+parentId: fld_46b08f5339d7440c9a171e2f99e449eb
+modified: 1695942231574
+created: 1695942216422
+url: http://localhost:8080/api/v1/posts/1
+name: Delete
 description: ""
 method: DELETE
 body: {}
@@ -13,7 +13,7 @@ headers:
   - name: User-Agent
     value: insomnia/2023.5.8
 authentication: {}
-metaSortKey: -1695497190197
+metaSortKey: -1695942216422
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

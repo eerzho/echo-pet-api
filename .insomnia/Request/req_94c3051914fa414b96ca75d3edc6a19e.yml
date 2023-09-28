@@ -1,10 +1,10 @@
 _id: req_94c3051914fa414b96ca75d3edc6a19e
 type: Request
-parentId: wrk_93ae1389158f46648c95315d68c2bd3b
-modified: 1695498712160
+parentId: fld_46b08f5339d7440c9a171e2f99e449eb
+modified: 1695942192239
 created: 1695482525187
-url: http://localhost:8080/api/v1/posts/7
-name: New Request
+url: http://localhost:8080/api/v1/posts/1
+name: Update
 description: ""
 method: PUT
 body:
@@ -20,7 +20,7 @@ headers:
   - name: User-Agent
     value: insomnia/2023.5.8
 authentication: {}
-metaSortKey: -1695482525187
+metaSortKey: -1695942149240
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

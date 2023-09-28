@@ -1,0 +1,30 @@
+_id: req_94c3051914fa414b96ca75d3edc6a19e
+type: Request
+parentId: wrk_93ae1389158f46648c95315d68c2bd3b
+modified: 1695498712160
+created: 1695482525187
+url: http://localhost:8080/api/v1/posts/7
+name: New Request
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"desc": "long desc"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695482525187
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,23 @@
+_id: req_10e115e04f574c7fb3a67dab16d51b9d
+type: Request
+parentId: wrk_93ae1389158f46648c95315d68c2bd3b
+modified: 1695498722821
+created: 1695497190197
+url: http://localhost:8080/api/v1/posts/4
+name: New Request
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695497190197
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

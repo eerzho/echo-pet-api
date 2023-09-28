@@ -1,0 +1,32 @@
+_id: req_e9f33ed371bb441493447b3aaae6e451
+type: Request
+parentId: fld_392d7bf4a48445b08cc5a5032d173fcf
+modified: 1695934010470
+created: 1695521470796
+url: http://localhost:8080/api/v1/users
+name: Store
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email": "eerzho5@gmail.com",
+    	"password": "test",
+    	"name": "test"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695933945390
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

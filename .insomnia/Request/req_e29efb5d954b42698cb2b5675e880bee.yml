@@ -1,0 +1,33 @@
+_id: req_e29efb5d954b42698cb2b5675e880bee
+type: Request
+parentId: wrk_93ae1389158f46648c95315d68c2bd3b
+modified: 1695671919806
+created: 1695468933221
+url: http://localhost:8080/api/v1/posts
+name: New Request
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"title": "Hello world!"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication:
+  type: bearer
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVlcnpob0BnbWFpbC5jb20iLCJleHAiOjE2OTU2NzE5MTAsImlkIjozfQ.qCW5SxYv2TbKVCTupEvR932kI-uIgJjDL2VicjV4ntM
+  prefix: Bearer
+metaSortKey: -1695468933221
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

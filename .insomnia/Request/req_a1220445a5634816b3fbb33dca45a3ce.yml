@@ -1,0 +1,30 @@
+_id: req_a1220445a5634816b3fbb33dca45a3ce
+type: Request
+parentId: fld_392d7bf4a48445b08cc5a5032d173fcf
+modified: 1695934179735
+created: 1695858892959
+url: http://localhost:8080/api/v1/users/14
+name: Update
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"password": "super"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1695933945590
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

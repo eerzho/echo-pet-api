@@ -19,6 +19,6 @@ func main() {
 
 	err := app.Start(fmt.Sprintf(":%s", env.GetString("app.port")))
 	if err != nil {
-		log.Fatalf("App start error: %v", err)
+		log.Fatalf("App start exception: %v", err)
 	}
 }

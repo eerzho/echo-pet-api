@@ -1,9 +1,9 @@
 _id: req_55a4547cf5be477a96cd327ca1f4f46d
 type: Request
 parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1695942231574
+modified: 1696158820560
 created: 1695942216422
-url: http://localhost:8080/api/v1/posts/1
+url: "{{ _.base_url }}/posts/1"
 name: Delete
 description: ""
 method: DELETE
@@ -12,7 +12,10 @@ parameters: []
 headers:
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
+authentication:
+  type: bearer
+  token: "{{ _.auth_token }}"
+  prefix: Bearer
 metaSortKey: -1695942216422
 isPrivate: false
 settingStoreCookies: true

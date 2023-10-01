@@ -1,9 +1,9 @@
 _id: req_73ea1a6137f7411fa3f3deda24198ac3
 type: Request
 parentId: fld_392d7bf4a48445b08cc5a5032d173fcf
-modified: 1695933965045
+modified: 1696158738016
 created: 1695516318590
-url: http://localhost:8080/api/v1/users
+url: "{{ _.base_url }}/users"
 name: Index
 description: ""
 method: GET
@@ -12,7 +12,10 @@ parameters: []
 headers:
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
+authentication:
+  type: bearer
+  prefix: Bearer
+  token: "{{ _.auth_token }}"
 metaSortKey: -1695933945290
 isPrivate: false
 settingStoreCookies: true

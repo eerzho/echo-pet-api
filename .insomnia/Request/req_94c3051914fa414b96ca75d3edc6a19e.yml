@@ -1,9 +1,9 @@
 _id: req_94c3051914fa414b96ca75d3edc6a19e
 type: Request
 parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1695942192239
+modified: 1696158812108
 created: 1695482525187
-url: http://localhost:8080/api/v1/posts/1
+url: "{{ _.base_url }}/posts/1"
 name: Update
 description: ""
 method: PUT
@@ -19,7 +19,10 @@ headers:
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
+authentication:
+  type: bearer
+  token: "{{ _.auth_token }}"
+  prefix: Bearer
 metaSortKey: -1695942149240
 isPrivate: false
 settingStoreCookies: true

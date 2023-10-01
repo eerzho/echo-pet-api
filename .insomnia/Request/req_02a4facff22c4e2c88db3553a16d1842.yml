@@ -1,9 +1,9 @@
 _id: req_02a4facff22c4e2c88db3553a16d1842
 type: Request
 parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1695941152238
+modified: 1696158774856
 created: 1694903272325
-url: http://localhost:8080/api/v1/posts
+url: "{{ _.base_url }}/posts"
 name: Index
 description: ""
 method: GET

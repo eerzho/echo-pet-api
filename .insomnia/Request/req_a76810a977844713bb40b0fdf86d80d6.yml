@@ -1,9 +1,9 @@
 _id: req_a76810a977844713bb40b0fdf86d80d6
 type: Request
 parentId: fld_392d7bf4a48445b08cc5a5032d173fcf
-modified: 1695934045965
+modified: 1696158750826
 created: 1695856588355
-url: http://localhost:8080/api/v1/users/14
+url: "{{ _.base_url }}/users/14"
 name: Show
 description: ""
 method: GET

@@ -1,9 +1,9 @@
 _id: req_e9f33ed371bb441493447b3aaae6e451
 type: Request
 parentId: fld_392d7bf4a48445b08cc5a5032d173fcf
-modified: 1695934010470
+modified: 1696158744182
 created: 1695521470796
-url: http://localhost:8080/api/v1/users
+url: "{{ _.base_url }}/users"
 name: Store
 description: ""
 method: POST
@@ -11,7 +11,7 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"email": "eerzho5@gmail.com",
+    	"email": "eerzho@gmail.com",
     	"password": "test",
     	"name": "test"
     }

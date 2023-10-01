@@ -1,11 +1,17 @@
 _id: env_5d8c965e8ce1e303cbdfe1a0baae24c0df4c3ef0
 type: Environment
 parentId: wrk_93ae1389158f46648c95315d68c2bd3b
-modified: 1695938057493
+modified: 1696158491289
 created: 1694903269023
 name: Base Environment
-data: {}
-dataPropertyOrder: {}
+data:
+  base_url: http://localhost:8080/api/v1
+  auth_token: "{% response 'body', 'req_3a4e088e232d4a30a8faf65035dddacd',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 250000 %}"
+dataPropertyOrder:
+  "&":
+    - base_url
+    - auth_token
 color: null
 isPrivate: false
 metaSortKey: 1694903269023

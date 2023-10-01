@@ -1,9 +1,9 @@
 _id: req_fcc4981826e642b5b483f48183d07148
 type: Request
 parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1695942176039
+modified: 1696158801599
 created: 1695942149140
-url: http://localhost:8080/api/v1/posts/slug/hello-world
+url: "{{ _.base_url }}/posts/slug/hello-world"
 name: Show-Slug
 description: ""
 method: GET

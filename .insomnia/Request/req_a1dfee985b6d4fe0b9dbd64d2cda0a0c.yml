@@ -1,9 +1,9 @@
 _id: req_a1dfee985b6d4fe0b9dbd64d2cda0a0c
 type: Request
 parentId: fld_a4413edce79f4223b57281070a740822
-modified: 1695936283689
+modified: 1696158535240
 created: 1695672204782
-url: http://localhost:8080/api/v1/me
+url: "{{ _.base_url }}/me"
 name: Me
 description: ""
 method: GET
@@ -14,7 +14,7 @@ headers:
     value: insomnia/2023.5.8
 authentication:
   type: bearer
-  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoX2lkIjoxMiwiZXhwIjoxNjk2MTk1NDc2fQ.ftLERO8hITaZWu6P_8W0yuzBsmuLKsCsVtGNakq7etg
+  token: "{{ _.auth_token }}"
   prefix: Bearer
   disabled: false
 metaSortKey: -1695934210928

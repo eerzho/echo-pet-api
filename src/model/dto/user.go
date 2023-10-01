@@ -13,17 +13,36 @@ type UserUpdateRequest struct {
 }
 
 type UserResponse struct {
-	ID        uint   `json:"id"`
-	Email     string `json:"email"`
-	Name      string `json:"name"`
-	CreatedAt int64  `json:"createdAt"`
+	ID        uint                `json:"id"`
+	Email     string              `json:"email"`
+	Name      string              `json:"name"`
+	CreatedAt int64               `json:"createdAt"`
+	Posts     []*UserPostResponse `json:"posts"`
 }
 
 func NewUserResponse(user *model.User) *UserResponse {
-	return &UserResponse{
+	response := &UserResponse{
 		ID:        user.ID,
 		Email:     user.Email,
 		Name:      user.Name,
 		CreatedAt: user.CreatedAt.Unix(),
 	}
+
+	var posts []*UserPostResponse
+	for _, post := range user.Posts {
+		posts = append(posts, NewUserPostResponse(&post))
+	}
+
+	response.Posts = posts
+
+	return response
+}
+
+type PostAuthorResponse struct {
+	ID    uint   `json:"id"`
+	Email string `json:"email"`
+}
+
+func NewPostAuthorResponse(user *model.User) *PostAuthorResponse {
+	return &PostAuthorResponse{ID: user.ID, Email: user.Email}
 }

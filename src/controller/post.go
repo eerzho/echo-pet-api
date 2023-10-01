@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"echo-pet-api/src/exception"
 	"echo-pet-api/src/model/dto"
 	"echo-pet-api/src/service"
 	"errors"
@@ -34,6 +35,10 @@ func (pc *PostController) Index(c echo.Context) error {
 }
 
 func (pc *PostController) Store(c echo.Context) error {
+	authorID, ok := c.Get("auth_id").(uint)
+	if !ok {
+		return echo.NewHTTPError(http.StatusUnauthorized, http.StatusUnauthorized)
+	}
 
 	request := dto.PostStoreRequest{}
 	if err := c.Bind(&request); err != nil {
@@ -44,7 +49,7 @@ func (pc *PostController) Store(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	response, err := pc.service.Create(&request)
+	response, err := pc.service.Create(authorID, &request)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -83,6 +88,11 @@ func (pc *PostController) ShowBySlug(c echo.Context) error {
 }
 
 func (pc *PostController) Update(c echo.Context) error {
+	authorID, ok := c.Get("auth_id").(uint)
+	if !ok {
+		return echo.NewHTTPError(http.StatusUnauthorized, http.StatusUnauthorized)
+	}
+
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
@@ -97,9 +107,11 @@ func (pc *PostController) Update(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	response, err := pc.service.Update(uint(id), &request)
+	response, err := pc.service.Update(authorID, uint(id), &request)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+	} else if errors.Is(err, &exception.PermissionDenied{}) {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
 	} else if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -108,14 +120,21 @@ func (pc *PostController) Update(c echo.Context) error {
 }
 
 func (pc *PostController) Delete(c echo.Context) error {
+	authorID, ok := c.Get("auth_id").(uint)
+	if !ok {
+		return echo.NewHTTPError(http.StatusUnauthorized, http.StatusUnauthorized)
+	}
+
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
 	}
 
-	err = pc.service.Delete(uint(id))
+	err = pc.service.Delete(authorID, uint(id))
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+	} else if errors.Is(err, &exception.PermissionDenied{}) {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
 	} else if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}

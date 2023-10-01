@@ -16,23 +16,30 @@ func NewPostRepository() *PostRepository {
 
 func (pr *PostRepository) GetAll() ([]*model.Post, error) {
 	var posts []*model.Post
-	err := pr.db.Find(&posts).Error
+	err := pr.db.Preload("Author").Find(&posts).Error
 
 	return posts, err
 }
 
 func (pr *PostRepository) GetById(id uint) (*model.Post, error) {
 	var post *model.Post
-	err := pr.db.First(&post, id).Error
+	err := pr.db.Preload("Author").First(&post, id).Error
 
 	return post, err
 }
 
 func (pr *PostRepository) GetBySlug(slug string) (*model.Post, error) {
 	var post *model.Post
-	err := pr.db.Where("slug = ?", slug).First(&post).Error
+	err := pr.db.Preload("Author").Where("slug = ?", slug).First(&post).Error
 
 	return post, err
+}
+
+func (pr *PostRepository) GetBySlugCount(slug string) (int, error) {
+	var count int64
+	err := pr.db.Table("posts").Where("slug LIKE ?", slug+"%").Count(&count).Error
+
+	return int(count), err
 }
 
 func (pr *PostRepository) Create(post *model.Post) error {

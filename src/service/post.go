@@ -1,9 +1,11 @@
 package service
 
 import (
+	"echo-pet-api/src/exception"
 	"echo-pet-api/src/model"
 	"echo-pet-api/src/model/dto"
 	"echo-pet-api/src/repository"
+	"fmt"
 	"github.com/gosimple/slug"
 )
 
@@ -47,12 +49,22 @@ func (ps *PostService) GetBySlug(slug string) (*dto.PostResponse, error) {
 	return dto.NewPostResponse(post), nil
 }
 
-func (ps *PostService) Create(request *dto.PostStoreRequest) (*dto.PostResponse, error) {
+func (ps *PostService) Create(authorId uint, request *dto.PostStoreRequest) (*dto.PostResponse, error) {
+
 	if request.Slug == "" {
 		request.Slug = slug.Make(request.Title)
+
+		slugCount, err := ps.repository.GetBySlugCount(request.Slug)
+		if err != nil {
+			return nil, err
+		}
+
+		if slugCount > 0 {
+			request.Slug = fmt.Sprintf("%s-%d", request.Slug, slugCount)
+		}
 	}
 
-	post := model.Post{Slug: request.Slug, Title: request.Title, Desc: request.Desc}
+	post := model.Post{Slug: request.Slug, Title: request.Title, Desc: request.Desc, AuthorID: authorId}
 
 	err := ps.repository.Create(&post)
 	if err != nil {
@@ -62,10 +74,14 @@ func (ps *PostService) Create(request *dto.PostStoreRequest) (*dto.PostResponse,
 	return dto.NewPostResponse(&post), nil
 }
 
-func (ps *PostService) Update(id uint, request *dto.PostUpdateRequest) (*dto.PostResponse, error) {
+func (ps *PostService) Update(authorID, id uint, request *dto.PostUpdateRequest) (*dto.PostResponse, error) {
 	post, err := ps.repository.GetById(id)
 	if err != nil {
 		return nil, err
+	}
+
+	if post.AuthorID != authorID {
+		return nil, exception.NewPermissionDenied()
 	}
 
 	post.Desc = request.Desc
@@ -76,10 +92,14 @@ func (ps *PostService) Update(id uint, request *dto.PostUpdateRequest) (*dto.Pos
 	return dto.NewPostResponse(post), nil
 }
 
-func (ps *PostService) Delete(id uint) error {
+func (ps *PostService) Delete(authorID, id uint) error {
 	post, err := ps.repository.GetById(id)
 	if err != nil {
 		return err
+	}
+
+	if post.AuthorID != authorID {
+		return exception.NewPermissionDenied()
 	}
 
 	err = ps.repository.Delete(post)

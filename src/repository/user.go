@@ -23,14 +23,14 @@ func (ur *UserRepository) GetAll() ([]*model.User, error) {
 
 func (ur *UserRepository) GetById(id uint) (*model.User, error) {
 	var user *model.User
-	err := ur.db.First(&user, id).Error
+	err := ur.db.Preload("Posts").First(&user, id).Error
 
 	return user, err
 }
 
 func (ur *UserRepository) GetByEmail(email string) (*model.User, error) {
 	var user *model.User
-	err := ur.db.Where("email = ?", email).First(&user).Error
+	err := ur.db.Preload("Posts").Where("email = ?", email).First(&user).Error
 
 	return user, err
 }

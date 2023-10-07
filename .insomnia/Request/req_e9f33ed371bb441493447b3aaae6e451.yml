@@ -15,13 +15,13 @@ body:
     	"password": "test",
     	"name": "test"
     }
-parameters: [ ]
+parameters: []
 headers:
   - name: Content-Type
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: { }
+authentication: {}
 metaSortKey: -1695933945390
 isPrivate: false
 settingStoreCookies: true

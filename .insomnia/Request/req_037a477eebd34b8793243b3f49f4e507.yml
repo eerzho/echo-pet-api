@@ -1,9 +1,9 @@
-_id: req_94c3051914fa414b96ca75d3edc6a19e
+_id: req_037a477eebd34b8793243b3f49f4e507
 type: Request
-parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1696158812108
-created: 1695482525187
-url: "{{ _.base_url }}/posts/1"
+parentId: fld_a02b3bea22fe45458eb86ada363cf7de
+modified: 1696684074990
+created: 1696683928348
+url: "{{ _.base_url }}/comments/4"
 name: Update
 description: ""
 method: PUT
@@ -11,19 +11,19 @@ body:
   mimeType: application/json
   text: |-
     {
-    	"desc": "long desc"
+    	"text": "testsupertest"
     }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
   - name: User-Agent
-    value: insomnia/2023.5.8
+    value: insomnia/8.2.0
 authentication:
   type: bearer
   token: "{{ _.auth_token }}"
   prefix: Bearer
-metaSortKey: -1695942149240
+metaSortKey: -1696683928348
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

@@ -10,13 +10,13 @@ method: GET
 body:
   mimeType: application/json
   text: ""
-parameters: [ ]
+parameters: []
 headers:
   - name: Content-Type
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: { }
+authentication: {}
 metaSortKey: -1695941152205
 isPrivate: false
 settingStoreCookies: true

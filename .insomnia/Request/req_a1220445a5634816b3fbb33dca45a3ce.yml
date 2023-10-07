@@ -13,7 +13,7 @@ body:
     {
     	"password": "super"
     }
-parameters: [ ]
+parameters: []
 headers:
   - name: Content-Type
     value: application/json

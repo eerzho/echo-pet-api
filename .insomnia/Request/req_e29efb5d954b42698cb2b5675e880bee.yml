@@ -13,7 +13,7 @@ body:
     {
     	"title": "Hello world!"
     }
-parameters: [ ]
+parameters: []
 headers:
   - name: Content-Type
     value: application/json

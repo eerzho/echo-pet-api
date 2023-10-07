@@ -1,22 +1,22 @@
-_id: req_73ea1a6137f7411fa3f3deda24198ac3
+_id: req_c15cd92b0ab346bfbf4c0e4756fc4b42
 type: Request
-parentId: fld_392d7bf4a48445b08cc5a5032d173fcf
-modified: 1696158738016
-created: 1695516318590
-url: "{{ _.base_url }}/users"
-name: Index
+parentId: fld_a02b3bea22fe45458eb86ada363cf7de
+modified: 1696684049717
+created: 1696684015787
+url: "{{ _.base_url }}/comments/3"
+name: Delete
 description: ""
-method: GET
+method: DELETE
 body: {}
 parameters: []
 headers:
   - name: User-Agent
-    value: insomnia/2023.5.8
+    value: insomnia/8.2.0
 authentication:
   type: bearer
-  prefix: Bearer
   token: "{{ _.auth_token }}"
-metaSortKey: -1695933945290
+  prefix: Bearer
+metaSortKey: -1696684015787
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

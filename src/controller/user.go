@@ -56,12 +56,12 @@ func (uc *UserController) Show(c echo.Context) error {
 
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	}
 
 	response, err := uc.service.GetById(uint(id))
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	} else if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -73,7 +73,7 @@ func (uc *UserController) Update(c echo.Context) error {
 
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	}
 
 	request := dto.UserUpdateRequest{}
@@ -87,7 +87,7 @@ func (uc *UserController) Update(c echo.Context) error {
 
 	response, err := uc.service.UpdatePassword(uint(id), &request)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	} else if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -99,15 +99,15 @@ func (uc *UserController) Delete(c echo.Context) error {
 
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	}
 
 	err = uc.service.Delete(uint(id))
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	} else if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	return echo.NewHTTPError(http.StatusOK, http.StatusText(http.StatusOK))
+	return c.JSON(http.StatusOK, http.StatusText(http.StatusOK))
 }

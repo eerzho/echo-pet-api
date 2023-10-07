@@ -27,4 +27,11 @@ func RegisterRoutes(app *echo.Echo) {
 	authController := controller.NewAuthController()
 	routesV1.POST("/login", authController.Login)
 	routesV1.GET("/me", authController.Me, middleware.JWTMiddleware())
+
+	commentController := controller.NewCommentController()
+	routesV1.GET("/comments", commentController.Index)
+	routesV1.POST("/comments", commentController.Store, middleware.JWTMiddleware())
+	routesV1.GET("/comments/:id", commentController.Show)
+	routesV1.PUT("/comments/:id", commentController.Update, middleware.JWTMiddleware())
+	routesV1.DELETE("/comments/:id", commentController.Delete, middleware.JWTMiddleware())
 }

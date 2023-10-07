@@ -43,7 +43,11 @@ func (pr *PostRepository) GetBySlugCount(slug string) (int, error) {
 }
 
 func (pr *PostRepository) Create(post *model.Post) error {
-	return pr.db.Create(post).Error
+	if err := pr.db.Save(post).Error; err != nil {
+		return err
+	}
+
+	return pr.db.Preload("Author").First(&post, post.ID).Error
 }
 
 func (pr *PostRepository) Update(post *model.Post) error {

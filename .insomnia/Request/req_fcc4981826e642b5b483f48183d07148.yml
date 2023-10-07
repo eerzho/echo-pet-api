@@ -7,12 +7,12 @@ url: "{{ _.base_url }}/posts/slug/hello-world"
 name: Show-Slug
 description: ""
 method: GET
-body: {}
-parameters: []
+body: { }
+parameters: [ ]
 headers:
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
+authentication: { }
 metaSortKey: -1695942149140
 isPrivate: false
 settingStoreCookies: true

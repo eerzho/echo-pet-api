@@ -15,12 +15,13 @@ type PostUpdateRequest struct {
 }
 
 type PostResponse struct {
-	ID        uint                `json:"id"`
-	Slug      string              `json:"slug"`
-	Title     string              `json:"title"`
-	Desc      string              `json:"desc"`
-	CreatedAt int64               `json:"createdAt"`
-	Author    *PostAuthorResponse `json:"author"`
+	ID        uint               `json:"id"`
+	Slug      string             `json:"slug"`
+	Title     string             `json:"title"`
+	Desc      string             `json:"desc"`
+	CreatedAt int64              `json:"created_at"`
+	AuthorID  uint               `json:"author_id"`
+	Author    *ShortUserResponse `json:"author"`
 }
 
 func NewPostResponse(post *model.Post) *PostResponse {
@@ -30,21 +31,12 @@ func NewPostResponse(post *model.Post) *PostResponse {
 		Title:     post.Title,
 		Desc:      post.Desc,
 		CreatedAt: post.CreatedAt.Unix(),
+		AuthorID:  post.AuthorID,
 	}
 
 	if post.Author.ID != 0 {
-		response.Author = NewPostAuthorResponse(&post.Author)
+		response.Author = NewShortUserResponse(&post.Author)
 	}
 
 	return response
-}
-
-type UserPostResponse struct {
-	ID    uint   `json:"id"`
-	Slug  string `json:"slug"`
-	Title string `json:"title"`
-}
-
-func NewUserPostResponse(post *model.Post) *UserPostResponse {
-	return &UserPostResponse{ID: post.ID, Slug: post.Slug, Title: post.Title}
 }

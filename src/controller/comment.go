@@ -12,21 +12,20 @@ import (
 	"strconv"
 )
 
-type PostController struct {
-	service  *service.PostService
+type CommentController struct {
+	service  *service.CommentService
 	validate *validator.Validate
 }
 
-func NewPostController() *PostController {
-	return &PostController{
-		service:  service.NewPostService(),
+func NewCommentController() *CommentController {
+	return &CommentController{
+		service:  service.NewCommentService(),
 		validate: validator.New(),
 	}
 }
 
-func (pc *PostController) Index(c echo.Context) error {
-
-	response, err := pc.service.GetAll()
+func (cc *CommentController) Index(c echo.Context) error {
+	response, err := cc.service.GetAll()
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -34,22 +33,22 @@ func (pc *PostController) Index(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-func (pc *PostController) Store(c echo.Context) error {
-	authorID, ok := c.Get("auth_id").(uint)
+func (cc *CommentController) Store(c echo.Context) error {
+	authID, ok := c.Get("auth_id").(uint)
 	if !ok {
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
 
-	request := dto.PostStoreRequest{}
+	request := dto.CommentStoreRequest{}
 	if err := c.Bind(&request); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	if err := pc.validate.Struct(request); err != nil {
+	if err := cc.validate.Struct(request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	response, err := pc.service.Create(authorID, &request)
+	response, err := cc.service.Create(authID, &request)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -57,13 +56,13 @@ func (pc *PostController) Store(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-func (pc *PostController) Show(c echo.Context) error {
+func (cc *CommentController) Show(c echo.Context) error {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusNotFound)
 	}
 
-	response, err := pc.service.GetById(uint(id))
+	response, err := cc.service.GetById(uint(id))
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return echo.NewHTTPError(http.StatusNotFound)
 	} else if err != nil {
@@ -73,22 +72,8 @@ func (pc *PostController) Show(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-func (pc *PostController) ShowBySlug(c echo.Context) error {
-
-	slug := c.Param("slug")
-
-	response, err := pc.service.GetBySlug(slug)
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return echo.NewHTTPError(http.StatusNotFound)
-	} else if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err)
-	}
-
-	return c.JSON(http.StatusOK, response)
-}
-
-func (pc *PostController) Update(c echo.Context) error {
-	authorID, ok := c.Get("auth_id").(uint)
+func (cc *CommentController) Update(c echo.Context) error {
+	authID, ok := c.Get("auth_id").(uint)
 	if !ok {
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
@@ -98,16 +83,16 @@ func (pc *PostController) Update(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound)
 	}
 
-	request := dto.PostUpdateRequest{}
+	request := dto.CommentUpdateRequest{}
 	if err = c.Bind(&request); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
-	if err = pc.validate.Struct(request); err != nil {
+	if err = cc.validate.Struct(request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
 
-	response, err := pc.service.Update(authorID, uint(id), &request)
+	response, err := cc.service.Update(authID, uint(id), &request)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return echo.NewHTTPError(http.StatusNotFound)
 	} else if errors.Is(err, &exception.PermissionDenied{}) {
@@ -119,8 +104,8 @@ func (pc *PostController) Update(c echo.Context) error {
 	return c.JSON(http.StatusOK, response)
 }
 
-func (pc *PostController) Delete(c echo.Context) error {
-	authorID, ok := c.Get("auth_id").(uint)
+func (cc *CommentController) Delete(c echo.Context) error {
+	authID, ok := c.Get("auth_id").(uint)
 	if !ok {
 		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
@@ -130,7 +115,7 @@ func (pc *PostController) Delete(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusNotFound)
 	}
 
-	err = pc.service.Delete(authorID, uint(id))
+	err = cc.service.Delete(authID, uint(id))
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return echo.NewHTTPError(http.StatusNotFound)
 	} else if errors.Is(err, &exception.PermissionDenied{}) {

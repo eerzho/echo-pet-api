@@ -24,9 +24,9 @@ func (us *UserService) GetAll() ([]*dto.UserResponse, error) {
 		return nil, err
 	}
 
-	response := []*dto.UserResponse{}
-	for _, user := range users {
-		response = append(response, dto.NewUserResponse(user))
+	response := make([]*dto.UserResponse, len(users))
+	for index, user := range users {
+		response[index] = dto.NewUserResponse(user)
 	}
 
 	return response, nil

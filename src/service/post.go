@@ -23,9 +23,9 @@ func (ps *PostService) GetAll() ([]*dto.PostResponse, error) {
 		return nil, err
 	}
 
-	response := []*dto.PostResponse{}
-	for _, post := range posts {
-		response = append(response, dto.NewPostResponse(post))
+	response := make([]*dto.PostResponse, len(posts))
+	for index, post := range posts {
+		response[index] = dto.NewPostResponse(post)
 	}
 
 	return response, nil

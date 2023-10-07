@@ -13,7 +13,7 @@ body:
     {
     	"desc": "long desc"
     }
-parameters: []
+parameters: [ ]
 headers:
   - name: Content-Type
     value: application/json

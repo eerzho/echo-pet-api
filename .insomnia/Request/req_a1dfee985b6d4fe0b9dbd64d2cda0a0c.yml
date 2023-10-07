@@ -7,8 +7,8 @@ url: "{{ _.base_url }}/me"
 name: Me
 description: ""
 method: GET
-body: {}
-parameters: []
+body: { }
+parameters: [ ]
 headers:
   - name: User-Agent
     value: insomnia/2023.5.8

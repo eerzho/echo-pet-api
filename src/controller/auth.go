@@ -48,12 +48,12 @@ func (ac *AuthController) Login(c echo.Context) error {
 func (ac *AuthController) Me(c echo.Context) error {
 	id, ok := c.Get("auth_id").(uint)
 	if !ok {
-		return echo.NewHTTPError(http.StatusUnauthorized, http.StatusUnauthorized)
+		return echo.NewHTTPError(http.StatusUnauthorized)
 	}
 
 	response, err := ac.userService.GetById(id)
 	if errors.Is(err, gorm.ErrRecordNotFound) {
-		return echo.NewHTTPError(http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		return echo.NewHTTPError(http.StatusNotFound)
 	} else if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}

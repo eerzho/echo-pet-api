@@ -7,12 +7,12 @@ url: "{{ _.base_url }}/posts/1"
 name: Show
 description: ""
 method: GET
-body: {}
-parameters: []
+body: { }
+parameters: [ ]
 headers:
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
+authentication: { }
 metaSortKey: -1695941152405
 isPrivate: false
 settingStoreCookies: true

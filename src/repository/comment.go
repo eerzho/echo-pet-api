@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"echo-pet-api/database"
+	"echo-pet-api/src/database"
 	"echo-pet-api/src/model"
 	"gorm.io/gorm"
 )

@@ -1,13 +1,13 @@
 package database
 
 import (
-	"echo-pet-api/config"
 	"echo-pet-api/src/model"
 	"fmt"
 	"github.com/labstack/gommon/log"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"os"
 	"sync"
 )
 
@@ -37,13 +37,11 @@ func Connection() *gorm.DB {
 }
 
 func newDB() *gorm.DB {
-	env := config.Env()
-
 	dsn := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s",
-		env.GetString("db.host"),
-		env.GetString("db.user"),
-		env.GetString("db.name"),
-		env.GetString("db.password"))
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_USER"),
+		os.Getenv("DB_NAME"),
+		os.Getenv("DB_PASSWORD"))
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),

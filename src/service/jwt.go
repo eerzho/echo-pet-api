@@ -1,9 +1,9 @@
 package service
 
 import (
-	"echo-pet-api/config"
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
+	"os"
 	"time"
 )
 
@@ -20,7 +20,7 @@ func (js *JWTService) GenerateToken(id uint) (string, error) {
 	claims["auth_id"] = id
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
-	return token.SignedString([]byte(config.Env().GetString("key.secret")))
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }
 
 func (js *JWTService) GenerateHash(word string) (string, error) {

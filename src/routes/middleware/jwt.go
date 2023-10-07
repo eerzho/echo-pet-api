@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	"echo-pet-api/config"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"os"
 )
 
 const BearerSchema = "Bearer "
@@ -28,7 +28,7 @@ func JWTMiddleware() echo.MiddlewareFunc {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, echo.NewHTTPError(http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized))
 				}
-				return []byte(config.Env().GetString("key.secret")), nil
+				return []byte(os.Getenv("JWT_SECRET")), nil
 			})
 
 			if err != nil || !token.Valid {

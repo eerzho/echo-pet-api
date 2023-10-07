@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"echo-pet-api/routes/middleware"
 	"echo-pet-api/src/controller"
+	"echo-pet-api/src/routes/middleware"
 	"github.com/labstack/echo/v4"
 )
 

@@ -1,15 +1,20 @@
 package main
 
 import (
-	"echo-pet-api/config"
-	"echo-pet-api/database"
-	"echo-pet-api/routes"
+	"echo-pet-api/src/config"
+	"echo-pet-api/src/database"
+	"echo-pet-api/src/routes"
 	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
+	"os"
 )
 
 func main() {
-	env := config.Env()
+
+	if err := godotenv.Load(); err != nil {
+		log.Fatalf("Env exception: %v", err)
+	}
 
 	app := config.CreateApp()
 	routes.RegisterRoutes(app)
@@ -17,7 +22,7 @@ func main() {
 	db := database.Connection()
 	database.AutoMigrate(db)
 
-	err := app.Start(fmt.Sprintf(":%s", env.GetString("app.port")))
+	err := app.Start(fmt.Sprintf(":%s", os.Getenv("APP_PORT")))
 	if err != nil {
 		log.Fatalf("App start exception: %v", err)
 	}

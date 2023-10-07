@@ -1,19 +1,19 @@
-_id: req_fcc4981826e642b5b483f48183d07148
+_id: req_233dce8c79f94cc5808cc9dd6e296618
 type: Request
-parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1696158801599
-created: 1695942149140
-url: "{{ _.base_url }}/posts/slug/hello-world"
-name: Show-Slug
+parentId: fld_a02b3bea22fe45458eb86ada363cf7de
+modified: 1696683689114
+created: 1696683674944
+url: "{{ _.base_url }}/comments/2"
+name: Show
 description: ""
 method: GET
 body: {}
 parameters: []
 headers:
   - name: User-Agent
-    value: insomnia/2023.5.8
+    value: insomnia/8.2.0
 authentication: {}
-metaSortKey: -1695942149140
+metaSortKey: -1696683674944
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

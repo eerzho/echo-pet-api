@@ -1,29 +1,30 @@
-_id: req_94c3051914fa414b96ca75d3edc6a19e
+_id: req_313def39f0654aed9991791c4727bee1
 type: Request
-parentId: fld_46b08f5339d7440c9a171e2f99e449eb
-modified: 1696158812108
-created: 1695482525187
-url: "{{ _.base_url }}/posts/1"
-name: Update
+parentId: fld_a02b3bea22fe45458eb86ada363cf7de
+modified: 1696683337724
+created: 1696682416055
+url: "{{ _.base_url }}/comments"
+name: Store
 description: ""
-method: PUT
+method: POST
 body:
   mimeType: application/json
   text: |-
     {
-    	"desc": "long desc"
+    	"text": "testtesttest",
+    	"post_id": 21
     }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
   - name: User-Agent
-    value: insomnia/2023.5.8
+    value: insomnia/8.2.0
 authentication:
   type: bearer
   token: "{{ _.auth_token }}"
   prefix: Bearer
-metaSortKey: -1695942149240
+metaSortKey: -1696682416055
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

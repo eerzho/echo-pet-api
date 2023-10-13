@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"auth-service/src/config/exception"
 	"auth-service/src/model/dto"
 	"auth-service/src/service"
 	"github.com/labstack/echo/v4"
@@ -48,9 +49,18 @@ func (this *UserController) Store(c echo.Context) error {
 }
 
 func (this *UserController) Show(c echo.Context) error {
-	id, err := this.getUintParam("id", c)
+	id, err := this.parseToUint(c.Param("id"), c)
 	if err != nil {
 		return err
+	}
+
+	authUser, err := this.authUser(c)
+	if err != nil {
+		return err
+	}
+
+	if authUser.ID != id {
+		return exception.ErrNotPermission
 	}
 
 	user, err := this.service.GetById(id)
@@ -62,9 +72,18 @@ func (this *UserController) Show(c echo.Context) error {
 }
 
 func (this *UserController) UpdatePassword(c echo.Context) error {
-	id, err := this.getUintParam("id", c)
+	id, err := this.parseToUint(c.Param("id"), c)
 	if err != nil {
 		return err
+	}
+
+	authUser, err := this.authUser(c)
+	if err != nil {
+		return err
+	}
+
+	if authUser.ID != id {
+		return exception.ErrNotPermission
 	}
 
 	request := dto.UserUpdatePasswordRequest{}
@@ -81,13 +100,21 @@ func (this *UserController) UpdatePassword(c echo.Context) error {
 }
 
 func (this *UserController) Delete(c echo.Context) error {
-	id, err := this.getUintParam("id", c)
+	id, err := this.parseToUint(c.Param("id"), c)
 	if err != nil {
 		return nil
 	}
 
-	err = this.service.Delete(id)
+	authUser, err := this.authUser(c)
 	if err != nil {
+		return err
+	}
+
+	if authUser.ID != id {
+		return exception.ErrNotPermission
+	}
+
+	if err = this.service.Delete(id); err != nil {
 		return err
 	}
 

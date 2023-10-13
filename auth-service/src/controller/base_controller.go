@@ -38,10 +38,10 @@ func (this *BaseController) handleRequest(request interface{}, c echo.Context) e
 	return nil
 }
 
-func (this *BaseController) getUintParam(key string, c echo.Context) (uint, error) {
-	id, err := strconv.ParseUint(c.Param(key), 10, 32)
+func (this *BaseController) parseToUint(value string, c echo.Context) (uint, error) {
+	id, err := strconv.ParseUint(value, 10, 32)
 	if err != nil {
-		return uint(id), err
+		return uint(id), exception.ErrInvalidParam
 	}
 
 	return uint(id), nil

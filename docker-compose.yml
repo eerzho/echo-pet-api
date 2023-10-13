@@ -7,7 +7,7 @@ services:
     env_file:
       - ./auth-service/.env
     ports:
-      - "8081:8081"
+      - "${AUTH_SERVICE_PORT}:8080"
     volumes:
       - ./auth-service:/usr/src/app
     command: air ./cmd/main.go -b 0.0.0.0
@@ -16,12 +16,11 @@ services:
     container_name: auth-db
     image: postgres:alpine
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-      - DATABASE_HOST=postgres
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
-      - "5433:5433"
+      - "${AUTH_SERVICE_DB_PORT}:5432"
     volumes:
       - auth-db:/var/lib/postgresql/data
 
@@ -31,7 +30,7 @@ services:
     env_file:
       - ./blog-service/.env
     ports:
-      - "8080:8080"
+      - "${BLOG_SERVICE_PORT}:8080"
     volumes:
       - ./blog-service:/usr/src/app
     command: air ./cmd/main.go -b 0.0.0.0
@@ -40,12 +39,11 @@ services:
     container_name: blog-db
     image: postgres:alpine
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-      - DATABASE_HOST=postgres
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "${BLOG_SERVICE_DB_PORT}:5432"
     volumes:
       - blog-db:/var/lib/postgresql/data
 

@@ -56,8 +56,11 @@ func errorHandler(err error, c echo.Context) {
 			code = http.StatusNotFound
 		} else if errors.Is(err, exception.ErrUnauthorized) {
 			code = http.StatusUnauthorized
-		} else if errors.Is(err, exception.ErrInvalidLogin) {
+		} else if errors.Is(err, exception.ErrInvalidLogin) ||
+			errors.Is(err, exception.ErrInvalidParam) {
 			code = http.StatusBadRequest
+		} else if errors.Is(err, exception.ErrNotPermission) {
+			code = http.StatusForbidden
 		}
 
 		c.JSON(code, map[string]interface{}{

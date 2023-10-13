@@ -21,6 +21,7 @@ func main() {
 
 	db := database.Connection()
 	database.AutoMigrate(db)
+	database.RunFixtures(db)
 
 	err := app.Start(fmt.Sprintf(":%s", os.Getenv("APP_PORT")))
 	if err != nil {

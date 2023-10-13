@@ -4,15 +4,21 @@ import (
 	"auth-service/src/model"
 	"auth-service/src/model/dto"
 	"auth-service/src/repository"
+	"github.com/davecgh/go-spew/spew"
 )
 
 type UserService struct {
-	repository *repository.UserRepository
-	jwtService *JWTService
+	repository  *repository.UserRepository
+	roleService *RoleService
+	jwtService  *JWTService
 }
 
 func NewUserService() *UserService {
-	return &UserService{repository: repository.NewUserRepository()}
+	return &UserService{
+		repository:  repository.NewUserRepository(),
+		roleService: NewRoleService(),
+		jwtService:  NewJWTService(),
+	}
 }
 
 func (this *UserService) GetAll() ([]*model.User, error) {
@@ -33,7 +39,14 @@ func (this *UserService) Create(request *dto.UserStoreRequest) (*model.User, err
 		return nil, err
 	}
 
-	user := model.User{Email: request.Email, Name: request.Name, Password: passwordHash}
+	spew.Dump(request)
+
+	role, err := this.roleService.GetBySlug("user")
+	if err != nil {
+		return nil, err
+	}
+
+	user := model.User{Email: request.Email, Name: request.Name, Password: passwordHash, RoleID: role.ID}
 
 	return this.repository.Save(user)
 }
@@ -54,4 +67,8 @@ func (this *UserService) UpdatePassword(id uint, request *dto.UserUpdatePassword
 
 func (this *UserService) Delete(id uint) error {
 	return this.repository.Delete(id)
+}
+
+func (this *UserService) HasPermission(id uint, permissionSlug string) bool {
+	return this.repository.HasPermission(id, permissionSlug)
 }

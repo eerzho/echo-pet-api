@@ -44,3 +44,20 @@ func (this *UserRepository) Save(user model.User) (*model.User, error) {
 func (this *UserRepository) Delete(id uint) error {
 	return this.connection.Delete(&model.User{}, id).Error
 }
+
+func (this *UserRepository) HasPermission(id uint, permissionSlug string) bool {
+	var count int64
+	err := this.connection.
+		Model(&model.Permission{}).
+		Joins("JOIN roles_permissions ON permissions.id = roles_permissions.permission_id").
+		Joins("JOIN roles ON roles.id = roles_permissions.role_id").
+		Joins("JOIN users ON users.role_id = roles.id").
+		Where("users.id = ? AND permissions.slug = ?", id, permissionSlug).
+		Count(&count).Error
+
+	if err != nil {
+		return false
+	}
+
+	return count > 0
+}

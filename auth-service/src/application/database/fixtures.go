@@ -1,18 +1,19 @@
 package database
 
 import (
+	"auth-service/src/application"
 	"auth-service/src/model"
 	"errors"
 	"gorm.io/gorm"
 )
 
-func RunFixtures(db *gorm.DB) {
-	runRoles(db)
-	runPermissions(db)
-	assignPermissionsToAdmin(db)
+func RunFixtures() {
+	runRoles()
+	runPermissions()
+	assignPermissionsToAdmin()
 }
 
-func runRoles(db *gorm.DB) {
+func runRoles() {
 	var roles = []model.Role{
 		{Name: "Admin", Slug: "admin"},
 		{Name: "User", Slug: "user"},
@@ -20,15 +21,15 @@ func runRoles(db *gorm.DB) {
 
 	for _, role := range roles {
 		var existingRole model.Role
-		if err := db.Where("slug = ?", role.Slug).First(&existingRole).Error; err != nil {
+		if err := application.GlobalDB.Where("slug = ?", role.Slug).First(&existingRole).Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
-				db.Create(&role)
+				application.GlobalDB.Create(&role)
 			}
 		}
 	}
 }
 
-func runPermissions(db *gorm.DB) {
+func runPermissions() {
 	var permissions = []model.Permission{
 		{Name: "Users index", Slug: "users-index"},
 		{Name: "Roles index", Slug: "roles-index"},
@@ -47,26 +48,26 @@ func runPermissions(db *gorm.DB) {
 
 	for _, permission := range permissions {
 		var existingPermission model.Permission
-		if err := db.Where("slug = ?", permission.Slug).First(&existingPermission).Error; err != nil {
+		if err := application.GlobalDB.Where("slug = ?", permission.Slug).First(&existingPermission).Error; err != nil {
 			if errors.Is(err, gorm.ErrRecordNotFound) {
-				db.Create(&permission)
+				application.GlobalDB.Create(&permission)
 			}
 		}
 	}
 }
 
-func assignPermissionsToAdmin(db *gorm.DB) {
+func assignPermissionsToAdmin() {
 	var adminRole model.Role
-	if err := db.Where("slug = ?", "admin").First(&adminRole).Error; err != nil {
+	if err := application.GlobalDB.Where("slug = ?", "admin").First(&adminRole).Error; err != nil {
 		return
 	}
 
 	var permissions []model.Permission
-	if err := db.Find(&permissions).Error; err != nil {
+	if err := application.GlobalDB.Find(&permissions).Error; err != nil {
 		return
 	}
 
-	if err := db.Model(&adminRole).Association("Permissions").Append(&permissions); err != nil {
+	if err := application.GlobalDB.Model(&adminRole).Association("Permissions").Append(&permissions); err != nil {
 		return
 	}
 }

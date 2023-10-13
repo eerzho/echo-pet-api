@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"auth-service/src/config/exception"
+	"auth-service/src/exception"
 	"auth-service/src/model"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"

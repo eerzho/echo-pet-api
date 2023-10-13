@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"auth-service/src/config/exception"
+	"auth-service/src/exception"
 	"auth-service/src/service"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"

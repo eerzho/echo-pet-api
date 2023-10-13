@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"auth-service/src/config/database"
+	"auth-service/src/application"
 	"auth-service/src/model"
 	"gorm.io/gorm"
 )
@@ -11,7 +11,7 @@ type PermissionRepository struct {
 }
 
 func NewPermissionRepository() *PermissionRepository {
-	return &PermissionRepository{connection: database.Connection()}
+	return &PermissionRepository{connection: application.GlobalDB}
 }
 
 func (this *PermissionRepository) GetAllByRole(roleID uint) ([]*model.Permission, error) {

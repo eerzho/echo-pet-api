@@ -1,7 +1,7 @@
 package application
 
 import (
-	"auth-service/src/config/exception"
+	"auth-service/src/exception"
 	"errors"
 	"fmt"
 	"github.com/go-playground/validator/v10"
@@ -11,26 +11,32 @@ import (
 	"gorm.io/gorm"
 	"net/http"
 	"strings"
+	"sync"
 )
 
-func CreateApp() *echo.Echo {
-	e := echo.New()
+var (
+	GlobalApp *echo.Echo
+	onceApp   sync.Once
+)
 
-	e.HTTPErrorHandler = errorHandler
+func InitializeApp(lvl log.Lvl) {
+	onceApp.Do(func() {
+		GlobalApp = echo.New()
 
-	e.Logger.SetLevel(log.DEBUG)
+		GlobalApp.HTTPErrorHandler = errorHandler
 
-	e.Pre(middleware.RemoveTrailingSlash())
+		GlobalApp.Logger.SetLevel(lvl)
 
-	e.Use(middleware.Logger())
+		GlobalApp.Pre(middleware.RemoveTrailingSlash())
 
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
-		AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
-	}))
+		GlobalApp.Use(middleware.Logger())
 
-	return e
+		GlobalApp.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowOrigins: []string{"*"},
+			AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization},
+			AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
+		}))
+	})
 }
 
 func errorHandler(err error, c echo.Context) {

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"auth-service/src/config/database"
+	"auth-service/src/application"
 	"auth-service/src/model"
 	"gorm.io/gorm"
 )
@@ -11,7 +11,7 @@ type UserRepository struct {
 }
 
 func NewUserRepository() *UserRepository {
-	return &UserRepository{connection: database.Connection()}
+	return &UserRepository{connection: application.GlobalDB}
 }
 
 func (this *UserRepository) GetAll() ([]*model.User, error) {

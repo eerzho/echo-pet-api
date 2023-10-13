@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"auth-service/src/config/database"
+	"auth-service/src/application"
 	"auth-service/src/model"
 	"github.com/davecgh/go-spew/spew"
 	"gorm.io/gorm"
@@ -12,7 +12,7 @@ type RoleRepository struct {
 }
 
 func NewRoleRepository() *RoleRepository {
-	return &RoleRepository{connection: database.Connection()}
+	return &RoleRepository{connection: application.GlobalDB}
 }
 
 func (this *RoleRepository) GetAll() ([]*model.Role, error) {

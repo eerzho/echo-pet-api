@@ -42,7 +42,12 @@ func (this *UserRepository) Save(user model.User) (*model.User, error) {
 }
 
 func (this *UserRepository) Delete(id uint) error {
-	return this.connection.Delete(&model.User{}, id).Error
+	var user model.User
+	if err := this.connection.First(&user, id).Error; err != nil {
+		return err
+	}
+
+	return this.connection.Delete(&user).Error
 }
 
 func (this *UserRepository) HasPermission(id uint, permissionSlug string) bool {

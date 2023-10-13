@@ -39,5 +39,10 @@ func (this *PermissionRepository) Save(permission model.Permission) (*model.Perm
 }
 
 func (this *PermissionRepository) Delete(id uint) error {
-	return this.connection.Delete(&model.Permission{}, id).Error
+	var permission model.Permission
+	if err := this.connection.First(&permission, id).Error; err != nil {
+		return err
+	}
+
+	return this.connection.Delete(&permission).Error
 }

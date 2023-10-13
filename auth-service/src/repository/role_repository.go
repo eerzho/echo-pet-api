@@ -45,7 +45,12 @@ func (this *RoleRepository) Save(role model.Role) (*model.Role, error) {
 }
 
 func (this *RoleRepository) Delete(id uint) error {
-	return this.connection.Delete(&model.Role{}, id).Error
+	var role model.Role
+	if err := this.connection.First(&role, id).Error; err != nil {
+		return err
+	}
+
+	return this.connection.Delete(&role).Error
 }
 
 func (this *RoleRepository) AddPermissions(id uint, permissionsID []uint) error {

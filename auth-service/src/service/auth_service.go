@@ -3,13 +3,14 @@ package service
 import (
 	"auth-service/src/exception"
 	"auth-service/src/model/dto"
+	"auth-service/src/service/service_interface"
 	"errors"
 	"gorm.io/gorm"
 )
 
 type AuthService struct {
-	userService *UserService
-	jwtService  *JWTService
+	userService service_interface.UserServiceInterface
+	jwtService  service_interface.JWTServiceInterface
 }
 
 func NewAuthService() *AuthService {

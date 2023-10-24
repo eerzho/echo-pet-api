@@ -2,8 +2,8 @@ package routes
 
 import (
 	"auth-service/src/application"
-	"auth-service/src/application/routes/middleware"
 	"auth-service/src/controller"
+	"auth-service/src/middleware"
 	"os"
 )
 

@@ -3,13 +3,14 @@ package controller
 import (
 	"auth-service/src/model/dto"
 	"auth-service/src/service"
+	"auth-service/src/service/service_interface"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type RoleController struct {
 	*BaseController
-	service *service.RoleService
+	service service_interface.RoleServiceInterface
 }
 
 func NewRoleController() *RoleController {

@@ -3,6 +3,7 @@ package controller
 import (
 	"auth-service/src/model/dto"
 	"auth-service/src/service"
+	"auth-service/src/service/service_interface"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/labstack/echo/v4"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 
 type PermissionController struct {
 	*BaseController
-	service *service.PermissionService
+	service service_interface.PermissionServiceInterface
 }
 
 func NewPermissionController() *PermissionController {

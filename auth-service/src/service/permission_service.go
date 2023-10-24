@@ -4,11 +4,12 @@ import (
 	"auth-service/src/model"
 	"auth-service/src/model/dto"
 	"auth-service/src/repository"
+	"auth-service/src/repository/repository_interface"
 	"github.com/gosimple/slug"
 )
 
 type PermissionService struct {
-	repository *repository.PermissionRepository
+	repository repository_interface.PermissionRepositoryInterface
 }
 
 func NewPermissionService() *PermissionService {

@@ -4,11 +4,12 @@ import (
 	"auth-service/src/exception"
 	"auth-service/src/model"
 	"auth-service/src/service"
+	"auth-service/src/service/service_interface"
 	"github.com/labstack/echo/v4"
 )
 
 type PermissionMiddleware struct {
-	userService *service.UserService
+	userService service_interface.UserServiceInterface
 }
 
 func NewPermissionMiddleware() *PermissionMiddleware {

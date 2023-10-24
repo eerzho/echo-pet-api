@@ -4,11 +4,12 @@ import (
 	"auth-service/src/model"
 	"auth-service/src/model/dto"
 	"auth-service/src/repository"
+	"auth-service/src/repository/repository_interface"
 	"github.com/gosimple/slug"
 )
 
 type RoleService struct {
-	repository *repository.RoleRepository
+	repository repository_interface.RoleRepositoryInterface
 }
 
 func NewRoleService() *RoleService {

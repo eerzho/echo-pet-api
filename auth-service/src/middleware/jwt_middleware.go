@@ -3,12 +3,13 @@ package middleware
 import (
 	"auth-service/src/exception"
 	"auth-service/src/service"
+	"auth-service/src/service/service_interface"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
 type JwtMiddleware struct {
-	userService *service.UserService
+	userService service_interface.UserServiceInterface
 	tokenPrefix string
 	secret      []byte
 }

@@ -4,13 +4,14 @@ import (
 	"auth-service/src/exception"
 	"auth-service/src/model/dto"
 	"auth-service/src/service"
+	"auth-service/src/service/service_interface"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type UserController struct {
 	*BaseController
-	service *service.UserService
+	service service_interface.UserServiceInterface
 }
 
 func NewUserController() *UserController {

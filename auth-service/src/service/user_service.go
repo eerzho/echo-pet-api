@@ -4,13 +4,15 @@ import (
 	"auth-service/src/model"
 	"auth-service/src/model/dto"
 	"auth-service/src/repository"
+	"auth-service/src/repository/repository_interface"
+	"auth-service/src/service/service_interface"
 	"github.com/davecgh/go-spew/spew"
 )
 
 type UserService struct {
-	repository  *repository.UserRepository
-	roleService *RoleService
-	jwtService  *JWTService
+	repository  repository_interface.UserRepositoryInterface
+	roleService service_interface.RoleServiceInterface
+	jwtService  service_interface.JWTServiceInterface
 }
 
 func NewUserService() *UserService {

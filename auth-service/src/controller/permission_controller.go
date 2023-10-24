@@ -4,7 +4,6 @@ import (
 	"auth-service/src/model/dto"
 	"auth-service/src/service"
 	"auth-service/src/service/service_interface"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -26,8 +25,6 @@ func (this *PermissionController) Index(c echo.Context) error {
 	if err != nil {
 		return err
 	}
-
-	spew.Dump(roleID)
 
 	permissions, err := this.service.GetAllByRole(roleID)
 	if err != nil {

@@ -6,7 +6,6 @@ import (
 	"auth-service/src/repository"
 	"auth-service/src/repository/repository_interface"
 	"auth-service/src/service/service_interface"
-	"github.com/davecgh/go-spew/spew"
 )
 
 type UserService struct {
@@ -40,8 +39,6 @@ func (this *UserService) Create(request *dto.UserStoreRequest) (*model.User, err
 	if err != nil {
 		return nil, err
 	}
-
-	spew.Dump(request)
 
 	role, err := this.roleService.GetBySlug("user")
 	if err != nil {

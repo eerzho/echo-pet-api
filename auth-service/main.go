@@ -4,7 +4,6 @@ import (
 	"auth-service/src/application"
 	"auth-service/src/application/database"
 	"auth-service/src/application/routes"
-	"auth-service/src/model"
 	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/labstack/gommon/log"
@@ -17,14 +16,8 @@ func main() {
 		log.Fatalf("Env exception: %v", err)
 	}
 
-	models := []interface{}{
-		&model.User{},
-		&model.Role{},
-		&model.Permission{},
-	}
-
 	application.InitializeApp(log.DEBUG)
-	application.InitializeDB(logger.Info, models)
+	application.InitializeDB(logger.Info)
 	routes.RegisterRoute("/api/v1")
 	database.RunFixtures()
 

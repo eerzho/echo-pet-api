@@ -3,7 +3,6 @@ package repository
 import (
 	"auth-service/src/application"
 	"auth-service/src/model"
-	"github.com/davecgh/go-spew/spew"
 	"gorm.io/gorm"
 )
 
@@ -32,8 +31,6 @@ func (this *RoleRepository) GetById(id uint) (*model.Role, error) {
 func (this *RoleRepository) GetBySlug(slug string) (*model.Role, error) {
 	var role *model.Role
 	err := this.connection.Where("slug LIKE ?", slug+"%").First(&role).Error
-
-	spew.Dump(role)
 
 	return role, err
 }

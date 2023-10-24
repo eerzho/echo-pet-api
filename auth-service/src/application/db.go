@@ -1,6 +1,7 @@
 package application
 
 import (
+	"auth-service/src/model"
 	"fmt"
 	"github.com/labstack/gommon/log"
 	"gorm.io/driver/postgres"
@@ -15,7 +16,7 @@ var (
 	onceDB   sync.Once
 )
 
-func InitializeDB(lvl logger.LogLevel, models ...interface{}) {
+func InitializeDB(lvl logger.LogLevel) {
 	onceDB.Do(func() {
 		dsn := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s",
 			os.Getenv("DB_HOST"),
@@ -39,7 +40,11 @@ func InitializeDB(lvl logger.LogLevel, models ...interface{}) {
 
 		sqlDB.SetMaxIdleConns(3)
 
-		err = GlobalDB.AutoMigrate(models...)
+		err = GlobalDB.AutoMigrate(
+			model.User{},
+			model.Role{},
+			model.Permission{},
+		)
 		if err != nil {
 			log.Fatalf("Migration error: %v", err)
 		}

@@ -1,8 +1,8 @@
 package service
 
 import (
+	"auth-service/src/dto"
 	"auth-service/src/exception"
-	"auth-service/src/model/dto"
 	"auth-service/src/service/service_interface"
 	"errors"
 	"gorm.io/gorm"

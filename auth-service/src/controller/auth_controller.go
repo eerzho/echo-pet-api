@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"auth-service/src/model/dto"
+	"auth-service/src/dto"
 	"auth-service/src/service"
 	"auth-service/src/service/service_interface"
 	"github.com/labstack/echo/v4"
@@ -20,6 +20,15 @@ func NewAuthController() *AuthController {
 	}
 }
 
+// Login
+// @title Login
+// @description Login a user
+// @accept json
+// @produce json
+// @tags auth
+// @param loginRequest body dto.LoginRequest true "Login Request"
+// @success	200 {object} dto.JSONResult{data=dto.LoginResponse}
+// @router /login [post]
 func (this *AuthController) Login(c echo.Context) error {
 	request := dto.LoginRequest{}
 	if err := this.handleRequest(&request, c); err != nil {
@@ -34,6 +43,15 @@ func (this *AuthController) Login(c echo.Context) error {
 	return this.json(http.StatusOK, dto.NewLoginResponse(token), c)
 }
 
+// Me
+// @title Me
+// @description	Get user info
+// @accept json
+// @produce json
+// @security ApiKeyAuth
+// @tags auth
+// @success 200	{object} dto.JSONResult{data=dto.UserResponse}
+// @router /me [get]
 func (this *AuthController) Me(c echo.Context) error {
 	user, err := this.authUser(c)
 	if err != nil {

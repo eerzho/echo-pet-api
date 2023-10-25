@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"auth-service/src/dto"
 	"auth-service/src/exception"
 	"auth-service/src/model"
 	"github.com/go-playground/validator/v10"
@@ -38,7 +39,7 @@ func (this *BaseController) handleRequest(request interface{}, c echo.Context) e
 	return nil
 }
 
-func (this *BaseController) parseToUint(value string, c echo.Context) (uint, error) {
+func (this *BaseController) parseToUint(value string) (uint, error) {
 	id, err := strconv.ParseUint(value, 10, 32)
 	if err != nil {
 		return uint(id), exception.ErrInvalidParam
@@ -48,8 +49,5 @@ func (this *BaseController) parseToUint(value string, c echo.Context) (uint, err
 }
 
 func (this *BaseController) json(code int, response interface{}, c echo.Context) error {
-	return c.JSON(code, map[string]interface{}{
-		"message": http.StatusText(code),
-		"data":    response,
-	})
+	return c.JSON(code, dto.NewJSONResult(http.StatusText(code), response))
 }

@@ -1,6 +1,7 @@
 package application
 
 import (
+	"auth-service/src/dto"
 	"auth-service/src/exception"
 	"errors"
 	"fmt"
@@ -50,10 +51,7 @@ func errorHandler(err error, c echo.Context) {
 			messages[fieldName] = fmt.Sprintf("Field validation for '%s' failed on the '%s' tag", fieldName, field.Tag())
 		}
 
-		c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": http.StatusText(http.StatusBadRequest),
-			"data":    messages,
-		})
+		c.JSON(http.StatusBadRequest, dto.NewJSONResult(http.StatusText(http.StatusBadRequest), messages))
 	} else {
 		var he *echo.HTTPError
 		if errors.As(err, &he) {
@@ -69,9 +67,6 @@ func errorHandler(err error, c echo.Context) {
 			code = http.StatusForbidden
 		}
 
-		c.JSON(code, map[string]interface{}{
-			"message": err.Error(),
-			"data":    nil,
-		})
+		c.JSON(code, dto.NewJSONResult(err.Error(), nil))
 	}
 }

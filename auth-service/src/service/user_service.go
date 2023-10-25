@@ -1,8 +1,8 @@
 package service
 
 import (
+	"auth-service/src/dto"
 	"auth-service/src/model"
-	"auth-service/src/model/dto"
 	"auth-service/src/repository"
 	"auth-service/src/repository/repository_interface"
 	"auth-service/src/service/service_interface"

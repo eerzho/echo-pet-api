@@ -1,8 +1,8 @@
 package service_interface
 
 import (
+	"auth-service/src/dto"
 	"auth-service/src/model"
-	"auth-service/src/model/dto"
 )
 
 type PermissionServiceInterface interface {

@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"auth-service/src/model/dto"
+	"auth-service/src/dto"
 	"auth-service/src/service"
 	"auth-service/src/service/service_interface"
 	"github.com/labstack/echo/v4"
@@ -20,8 +20,17 @@ func NewPermissionController() *PermissionController {
 	}
 }
 
+// Index
+// @title Index
+// @description List of permissions
+// @accept json
+// @produce json
+// @security ApiKeyAuth
+// @tags permission
+// @success 200 {object} dto.JSONResult{data=[]dto.PermissionResponse}
+// @router /permissions [get]
 func (this *PermissionController) Index(c echo.Context) error {
-	roleID, err := this.parseToUint(c.QueryParam("role_id"), c)
+	roleID, err := this.parseToUint(c.QueryParam("role_id"))
 	if err != nil {
 		return err
 	}
@@ -39,6 +48,16 @@ func (this *PermissionController) Index(c echo.Context) error {
 	return this.json(http.StatusOK, response, c)
 }
 
+// Store
+// @title Store
+// @description Create a permission
+// @accept json
+// @produce json
+// @security ApiKeyAuth
+// @tags permission
+// @param permissionStoreRequest body dto.PermissionStoreRequest true "Permission store request"
+// @success 200 {object} dto.JSONResult{data=dto.PermissionResponse}
+// @router /permissions [post]
 func (this *PermissionController) Store(c echo.Context) error {
 	request := dto.PermissionStoreRequest{}
 	if err := this.handleRequest(&request, c); err != nil {
@@ -53,8 +72,18 @@ func (this *PermissionController) Store(c echo.Context) error {
 	return this.json(http.StatusOK, dto.NewPermissionResponse(permission), c)
 }
 
+// Show
+// @title Show
+// @description Get a permission
+// @accept json
+// @produce json
+// @security ApiKeyAuth
+// @tags permission
+// @param id path int true "Permission ID"
+// @success 200 {object} dto.JSONResult{data=dto.PermissionResponse}
+// @router /permissions/{id} [get]
 func (this *PermissionController) Show(c echo.Context) error {
-	id, err := this.parseToUint(c.Param("id"), c)
+	id, err := this.parseToUint(c.Param("id"))
 	if err != nil {
 		return err
 	}
@@ -67,8 +96,19 @@ func (this *PermissionController) Show(c echo.Context) error {
 	return this.json(http.StatusOK, dto.NewPermissionResponse(permission), c)
 }
 
+// Update
+// @title Update
+// @description Update a permission
+// @accept json
+// @produce json
+// @security ApiKeyAuth
+// @tags permission
+// @param permissionUpdateRequest body dto.PermissionUpdateRequest true "Permission update request"
+// @param id path int true "Permission ID"
+// @success 200 {object} dto.JSONResult{data=dto.PermissionResponse}
+// @router /permissions/{id} [patch]
 func (this *PermissionController) Update(c echo.Context) error {
-	id, err := this.parseToUint(c.Param("id"), c)
+	id, err := this.parseToUint(c.Param("id"))
 	if err != nil {
 		return err
 	}
@@ -86,8 +126,18 @@ func (this *PermissionController) Update(c echo.Context) error {
 	return this.json(http.StatusOK, dto.NewPermissionResponse(permission), c)
 }
 
+// Delete
+// @title Delete
+// @description Delete a permission
+// @accept json
+// @produce json
+// @security ApiKeyAuth
+// @tags permission
+// @param id path int true "Permission ID"
+// @success 200 {object} dto.JSONResult
+// @router /permissions/{id} [delete]
 func (this *PermissionController) Delete(c echo.Context) error {
-	id, err := this.parseToUint(c.Param("id"), c)
+	id, err := this.parseToUint(c.Param("id"))
 	if err != nil {
 		return err
 	}

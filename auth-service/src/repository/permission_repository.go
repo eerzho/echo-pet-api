@@ -1,17 +1,15 @@
 package repository
 
 import (
-	"auth-service/src/application"
 	"auth-service/src/model"
-	"gorm.io/gorm"
 )
 
 type PermissionRepository struct {
-	connection *gorm.DB
+	*BaseRepository[model.Permission]
 }
 
 func NewPermissionRepository() *PermissionRepository {
-	return &PermissionRepository{connection: application.GlobalDB}
+	return &PermissionRepository{BaseRepository: NewBaseRepository[model.Permission]()}
 }
 
 func (this *PermissionRepository) GetAllByRole(roleID uint) ([]*model.Permission, error) {
@@ -23,26 +21,4 @@ func (this *PermissionRepository) GetAllByRole(roleID uint) ([]*model.Permission
 	}
 
 	return role.Permissions, nil
-}
-
-func (this *PermissionRepository) GetById(id uint) (*model.Permission, error) {
-	var permission *model.Permission
-	err := this.connection.First(&permission, id).Error
-
-	return permission, err
-}
-
-func (this *PermissionRepository) Save(permission model.Permission) (*model.Permission, error) {
-	result := this.connection.Save(&permission)
-
-	return &permission, result.Error
-}
-
-func (this *PermissionRepository) Delete(id uint) error {
-	var permission model.Permission
-	if err := this.connection.First(&permission, id).Error; err != nil {
-		return err
-	}
-
-	return this.connection.Delete(&permission).Error
 }

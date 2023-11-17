@@ -1,17 +1,15 @@
 package repository
 
 import (
-	"auth-service/src/application"
 	"auth-service/src/model"
-	"gorm.io/gorm"
 )
 
 type RoleRepository struct {
-	connection *gorm.DB
+	*BaseRepository[model.Role]
 }
 
 func NewRoleRepository() *RoleRepository {
-	return &RoleRepository{connection: application.GlobalDB}
+	return &RoleRepository{BaseRepository: NewBaseRepository[model.Role]()}
 }
 
 func (this *RoleRepository) GetAll() ([]*model.Role, error) {
@@ -21,33 +19,11 @@ func (this *RoleRepository) GetAll() ([]*model.Role, error) {
 	return roles, err
 }
 
-func (this *RoleRepository) GetById(id uint) (*model.Role, error) {
-	var role *model.Role
-	err := this.connection.First(&role, id).Error
-
-	return role, err
-}
-
 func (this *RoleRepository) GetBySlug(slug string) (*model.Role, error) {
 	var role *model.Role
 	err := this.connection.Where("slug LIKE ?", slug+"%").First(&role).Error
 
 	return role, err
-}
-
-func (this *RoleRepository) Save(role model.Role) (*model.Role, error) {
-	result := this.connection.Save(&role)
-
-	return &role, result.Error
-}
-
-func (this *RoleRepository) Delete(id uint) error {
-	var role model.Role
-	if err := this.connection.First(&role, id).Error; err != nil {
-		return err
-	}
-
-	return this.connection.Delete(&role).Error
 }
 
 func (this *RoleRepository) AddPermissions(id uint, permissionsID []uint) error {

@@ -24,29 +24,5 @@ services:
     volumes:
       - auth-db:/var/lib/postgresql/data
 
-  blog-service:
-    container_name: blog-service
-    build: ./blog-service
-    env_file:
-      - ./blog-service/.env
-    ports:
-      - "${BLOG_SERVICE_PORT}:8080"
-    volumes:
-      - ./blog-service:/usr/src/app
-    command: air ./cmd/main.go -b 0.0.0.0
-
-  blog-db:
-    container_name: blog-db
-    image: postgres:alpine
-    environment:
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-    ports:
-      - "${BLOG_SERVICE_DB_PORT}:5432"
-    volumes:
-      - blog-db:/var/lib/postgresql/data
-
 volumes:
   auth-db:
-  blog-db:

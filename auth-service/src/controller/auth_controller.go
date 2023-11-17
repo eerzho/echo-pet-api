@@ -10,13 +10,15 @@ import (
 
 type AuthController struct {
 	*BaseController
-	service service_interface.AuthServiceInterface
+	service     service_interface.AuthServiceInterface
+	userService service_interface.UserServiceInterface
 }
 
 func NewAuthController() *AuthController {
 	return &AuthController{
 		BaseController: NewBaseController(),
 		service:        service.NewAuthService(),
+		userService:    service.NewUserService(),
 	}
 }
 
@@ -54,6 +56,11 @@ func (this *AuthController) Login(c echo.Context) error {
 // @router /me [get]
 func (this *AuthController) Me(c echo.Context) error {
 	user, err := this.authUser(c)
+	if err != nil {
+		return err
+	}
+
+	user, err = this.userService.GetById(user.ID)
 	if err != nil {
 		return err
 	}

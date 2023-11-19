@@ -1,28 +1,26 @@
 version: '3.8'
 
 services:
-  auth-service:
-    container_name: auth-service
-    build: ./auth-service
+  sso:
+    build: ./sso
     env_file:
-      - ./auth-service/.env
+      - ./sso/.env
     ports:
-      - "${AUTH_SERVICE_PORT}:8080"
+      - "${SSO_PORT}:8080"
     volumes:
-      - ./auth-service:/usr/src/app
+      - ./sso:/usr/src/app
     command: air ./cmd/main.go -b 0.0.0.0
 
-  auth-db:
-    container_name: auth-db
+  sso-db:
     image: postgres:alpine
     environment:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
-      - "${AUTH_SERVICE_DB_PORT}:5432"
+      - "${SSO_PORT}:5432"
     volumes:
-      - auth-db:/var/lib/postgresql/data
+      - sso-db:/var/lib/postgresql/data
 
 volumes:
-  auth-db:
+  sso-db:

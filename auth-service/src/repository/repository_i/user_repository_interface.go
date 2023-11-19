@@ -1,8 +1,8 @@
-package repository_interface
+package repository_i
 
 import "auth-service/src/model"
 
-type UserRepositoryInterface interface {
+type UserRepositoryI interface {
 	GetAll() ([]*model.User, error)
 	GetById(id uint) (*model.User, error)
 	GetByEmail(email string) (*model.User, error)

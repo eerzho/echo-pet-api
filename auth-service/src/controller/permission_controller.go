@@ -2,21 +2,20 @@ package controller
 
 import (
 	"auth-service/src/dto"
-	"auth-service/src/service"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/service/service_i"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type PermissionController struct {
 	*BaseController
-	service service_interface.PermissionServiceInterface
+	permissionService service_i.PermissionServiceI
 }
 
-func NewPermissionController() *PermissionController {
+func NewPermissionController(permissionService service_i.PermissionServiceI) *PermissionController {
 	return &PermissionController{
-		BaseController: NewBaseController(),
-		service:        service.NewPermissionService(),
+		BaseController:    NewBaseController(),
+		permissionService: permissionService,
 	}
 }
 
@@ -35,7 +34,7 @@ func (this *PermissionController) Index(c echo.Context) error {
 		return err
 	}
 
-	permissions, err := this.service.GetAllByRole(roleID)
+	permissions, err := this.permissionService.GetAllByRole(roleID)
 	if err != nil {
 		return err
 	}
@@ -64,7 +63,7 @@ func (this *PermissionController) Store(c echo.Context) error {
 		return err
 	}
 
-	permission, err := this.service.Create(&request)
+	permission, err := this.permissionService.Create(&request)
 	if err != nil {
 		return err
 	}
@@ -88,7 +87,7 @@ func (this *PermissionController) Show(c echo.Context) error {
 		return err
 	}
 
-	permission, err := this.service.GetById(id)
+	permission, err := this.permissionService.GetById(id)
 	if err != nil {
 		return err
 	}
@@ -118,7 +117,7 @@ func (this *PermissionController) Update(c echo.Context) error {
 		return err
 	}
 
-	permission, err := this.service.Update(id, &request)
+	permission, err := this.permissionService.Update(id, &request)
 	if err != nil {
 		return err
 	}
@@ -142,7 +141,7 @@ func (this *PermissionController) Delete(c echo.Context) error {
 		return err
 	}
 
-	if err = this.service.Delete(id); err != nil {
+	if err = this.permissionService.Delete(id); err != nil {
 		return err
 	}
 

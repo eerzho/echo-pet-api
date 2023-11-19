@@ -1,11 +1,11 @@
-package service_interface
+package service_i
 
 import (
 	"auth-service/src/dto"
 	"auth-service/src/model"
 )
 
-type RoleServiceInterface interface {
+type RoleServiceI interface {
 	GetAll() ([]*model.Role, error)
 	GetById(id uint) (*model.Role, error)
 	GetBySlug(slug string) (*model.Role, error)

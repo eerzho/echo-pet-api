@@ -3,21 +3,20 @@ package controller
 import (
 	"auth-service/src/dto"
 	"auth-service/src/exception"
-	"auth-service/src/service"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/service/service_i"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type UserController struct {
 	*BaseController
-	service service_interface.UserServiceInterface
+	userService service_i.UserServiceI
 }
 
-func NewUserController() *UserController {
+func NewUserController(userService service_i.UserServiceI) *UserController {
 	return &UserController{
 		BaseController: NewBaseController(),
-		service:        service.NewUserService(),
+		userService:    userService,
 	}
 }
 
@@ -31,7 +30,7 @@ func NewUserController() *UserController {
 // @success 200 {object} dto.JSONResult{data=[]dto.UserResponse}
 // @router /users [get]
 func (this *UserController) Index(c echo.Context) error {
-	users, err := this.service.GetAll()
+	users, err := this.userService.GetAll()
 	if err != nil {
 		return err
 	}
@@ -59,7 +58,7 @@ func (this *UserController) Store(c echo.Context) error {
 		return err
 	}
 
-	user, err := this.service.Create(&request)
+	user, err := this.userService.Create(&request)
 	if err != nil {
 		return err
 	}
@@ -92,7 +91,7 @@ func (this *UserController) Show(c echo.Context) error {
 		return exception.ErrNotPermission
 	}
 
-	user, err := this.service.GetById(id)
+	user, err := this.userService.GetById(id)
 	if err != nil {
 		return err
 	}
@@ -131,7 +130,7 @@ func (this *UserController) UpdatePassword(c echo.Context) error {
 		return err
 	}
 
-	user, err := this.service.UpdatePassword(id, &request)
+	user, err := this.userService.UpdatePassword(id, &request)
 	if err != nil {
 		return err
 	}
@@ -164,7 +163,7 @@ func (this *UserController) Delete(c echo.Context) error {
 		return exception.ErrNotPermission
 	}
 
-	if err = this.service.Delete(id); err != nil {
+	if err = this.userService.Delete(id); err != nil {
 		return err
 	}
 

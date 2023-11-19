@@ -1,8 +1,8 @@
-package repository_interface
+package repository_i
 
 import "auth-service/src/model"
 
-type PermissionRepositoryInterface interface {
+type PermissionRepositoryI interface {
 	GetAllByRole(roleID uint) ([]*model.Permission, error)
 	GetById(id uint) (*model.Permission, error)
 	Save(permission model.Permission) (*model.Permission, error)

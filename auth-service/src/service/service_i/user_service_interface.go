@@ -1,11 +1,11 @@
-package service_interface
+package service_i
 
 import (
 	"auth-service/src/dto"
 	"auth-service/src/model"
 )
 
-type UserServiceInterface interface {
+type UserServiceI interface {
 	GetAll() ([]*model.User, error)
 	GetById(id uint) (*model.User, error)
 	GetByEmail(email string) (*model.User, error)

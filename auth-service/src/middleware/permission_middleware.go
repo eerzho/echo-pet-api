@@ -3,17 +3,16 @@ package middleware
 import (
 	"auth-service/src/exception"
 	"auth-service/src/model"
-	"auth-service/src/service"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/service/service_i"
 	"github.com/labstack/echo/v4"
 )
 
 type PermissionMiddleware struct {
-	userService service_interface.UserServiceInterface
+	userService service_i.UserServiceI
 }
 
-func NewPermissionMiddleware() *PermissionMiddleware {
-	return &PermissionMiddleware{userService: service.NewUserService()}
+func NewPermissionMiddleware(userService service_i.UserServiceI) *PermissionMiddleware {
+	return &PermissionMiddleware{userService: userService}
 }
 
 func (this *PermissionMiddleware) Run(permissionSlug string) echo.MiddlewareFunc {

@@ -1,8 +1,8 @@
-package repository_interface
+package repository_i
 
 import "auth-service/src/model"
 
-type RoleRepositoryInterface interface {
+type RoleRepositoryI interface {
 	GetAll() ([]*model.Role, error)
 	GetById(id uint) (*model.Role, error)
 	GetBySlug(slug string) (*model.Role, error)

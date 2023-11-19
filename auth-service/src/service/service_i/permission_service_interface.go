@@ -1,11 +1,11 @@
-package service_interface
+package service_i
 
 import (
 	"auth-service/src/dto"
 	"auth-service/src/model"
 )
 
-type PermissionServiceInterface interface {
+type PermissionServiceI interface {
 	GetAllByRole(roleID uint) ([]*model.Permission, error)
 	GetById(id uint) (*model.Permission, error)
 	Create(request *dto.PermissionStoreRequest) (*model.Permission, error)

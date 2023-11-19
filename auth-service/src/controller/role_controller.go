@@ -2,21 +2,20 @@ package controller
 
 import (
 	"auth-service/src/dto"
-	"auth-service/src/service"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/service/service_i"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type RoleController struct {
 	*BaseController
-	service service_interface.RoleServiceInterface
+	roleService service_i.RoleServiceI
 }
 
-func NewRoleController() *RoleController {
+func NewRoleController(roleService service_i.RoleServiceI) *RoleController {
 	return &RoleController{
 		BaseController: NewBaseController(),
-		service:        service.NewRoleService(),
+		roleService:    roleService,
 	}
 }
 
@@ -30,7 +29,7 @@ func NewRoleController() *RoleController {
 // @success 200 {object} dto.JSONResult{data=[]dto.RoleResponse}
 // @router /roles [get]
 func (this *RoleController) Index(c echo.Context) error {
-	roles, err := this.service.GetAll()
+	roles, err := this.roleService.GetAll()
 	if err != nil {
 		return err
 	}
@@ -59,7 +58,7 @@ func (this *RoleController) Store(c echo.Context) error {
 		return err
 	}
 
-	role, err := this.service.Create(&request)
+	role, err := this.roleService.Create(&request)
 	if err != nil {
 		return err
 	}
@@ -83,7 +82,7 @@ func (this *RoleController) Show(c echo.Context) error {
 		return err
 	}
 
-	role, err := this.service.GetById(id)
+	role, err := this.roleService.GetById(id)
 	if err != nil {
 		return err
 	}
@@ -113,7 +112,7 @@ func (this *RoleController) Update(c echo.Context) error {
 		return err
 	}
 
-	role, err := this.service.Update(id, &request)
+	role, err := this.roleService.Update(id, &request)
 	if err != nil {
 		return err
 	}
@@ -137,7 +136,7 @@ func (this *RoleController) Delete(c echo.Context) error {
 		return err
 	}
 
-	if err = this.service.Delete(id); err != nil {
+	if err = this.roleService.Delete(id); err != nil {
 		return err
 	}
 
@@ -166,7 +165,7 @@ func (this *RoleController) AddPermissions(c echo.Context) error {
 		return err
 	}
 
-	if err = this.service.AddPermissions(id, &request); err != nil {
+	if err = this.roleService.AddPermissions(id, &request); err != nil {
 		return err
 	}
 
@@ -195,7 +194,7 @@ func (this *RoleController) RemovePermissions(c echo.Context) error {
 		return err
 	}
 
-	if err = this.service.RemovePermissions(id, &request); err != nil {
+	if err = this.roleService.RemovePermissions(id, &request); err != nil {
 		return err
 	}
 

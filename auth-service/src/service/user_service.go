@@ -3,35 +3,38 @@ package service
 import (
 	"auth-service/src/dto"
 	"auth-service/src/model"
-	"auth-service/src/repository"
-	"auth-service/src/repository/repository_interface"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/repository/repository_i"
+	"auth-service/src/service/service_i"
 )
 
 type UserService struct {
-	repository  repository_interface.UserRepositoryInterface
-	roleService service_interface.RoleServiceInterface
-	jwtService  service_interface.JWTServiceInterface
+	userRepository repository_i.UserRepositoryI
+	roleService    service_i.RoleServiceI
+	jwtService     service_i.JWTServiceI
 }
 
-func NewUserService() *UserService {
+func NewUserService(
+	userRepository repository_i.UserRepositoryI,
+	roleService service_i.RoleServiceI,
+	jwtService service_i.JWTServiceI,
+) *UserService {
 	return &UserService{
-		repository:  repository.NewUserRepository(),
-		roleService: NewRoleService(),
-		jwtService:  NewJWTService(),
+		userRepository: userRepository,
+		roleService:    roleService,
+		jwtService:     jwtService,
 	}
 }
 
 func (this *UserService) GetAll() ([]*model.User, error) {
-	return this.repository.GetAll()
+	return this.userRepository.GetAll()
 }
 
 func (this *UserService) GetById(id uint) (*model.User, error) {
-	return this.repository.GetById(id)
+	return this.userRepository.GetById(id)
 }
 
 func (this *UserService) GetByEmail(email string) (*model.User, error) {
-	return this.repository.GetByEmail(email)
+	return this.userRepository.GetByEmail(email)
 }
 
 func (this *UserService) Create(request *dto.UserStoreRequest) (*model.User, error) {
@@ -47,11 +50,11 @@ func (this *UserService) Create(request *dto.UserStoreRequest) (*model.User, err
 
 	user := model.User{Email: request.Email, Name: request.Name, Password: passwordHash, RoleID: role.ID}
 
-	return this.repository.Save(user)
+	return this.userRepository.Save(user)
 }
 
 func (this *UserService) UpdatePassword(id uint, request *dto.UserUpdatePasswordRequest) (*model.User, error) {
-	user, err := this.repository.GetById(id)
+	user, err := this.userRepository.GetById(id)
 	if err != nil {
 		return nil, err
 	}
@@ -61,13 +64,13 @@ func (this *UserService) UpdatePassword(id uint, request *dto.UserUpdatePassword
 		return nil, err
 	}
 
-	return this.repository.Save(*user)
+	return this.userRepository.Save(*user)
 }
 
 func (this *UserService) Delete(id uint) error {
-	return this.repository.Delete(id)
+	return this.userRepository.Delete(id)
 }
 
 func (this *UserService) HasPermission(id uint, permissionSlug string) bool {
-	return this.repository.HasPermission(id, permissionSlug)
+	return this.userRepository.HasPermission(id, permissionSlug)
 }

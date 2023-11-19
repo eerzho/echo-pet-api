@@ -3,20 +3,21 @@ package service
 import (
 	"auth-service/src/dto"
 	"auth-service/src/exception"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/model"
+	"auth-service/src/service/service_i"
 	"errors"
 	"gorm.io/gorm"
 )
 
 type AuthService struct {
-	userService service_interface.UserServiceInterface
-	jwtService  service_interface.JWTServiceInterface
+	userService service_i.UserServiceI
+	jwtService  service_i.JWTServiceI
 }
 
-func NewAuthService() *AuthService {
+func NewAuthService(userService service_i.UserServiceI, jwtService service_i.JWTServiceI) *AuthService {
 	return &AuthService{
-		userService: NewUserService(),
-		jwtService:  NewJWTService(),
+		userService: userService,
+		jwtService:  jwtService,
 	}
 }
 
@@ -39,4 +40,8 @@ func (this *AuthService) Login(request *dto.LoginRequest) (string, error) {
 	}
 
 	return token, nil
+}
+
+func (this *AuthService) GetUserById(id uint) (*model.User, error) {
+	return this.userService.GetById(id)
 }

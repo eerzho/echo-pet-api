@@ -2,21 +2,24 @@ package middleware
 
 import (
 	"auth-service/src/exception"
-	"auth-service/src/service"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/service/service_i"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/labstack/echo/v4"
 )
 
 type JwtMiddleware struct {
-	userService service_interface.UserServiceInterface
+	userService service_i.UserServiceI
 	tokenPrefix string
 	secret      []byte
 }
 
-func NewJwtMiddleware(secret []byte, tokenPrefix string) *JwtMiddleware {
+func NewJwtMiddleware(
+	userService service_i.UserServiceI,
+	secret []byte,
+	tokenPrefix string,
+) *JwtMiddleware {
 	return &JwtMiddleware{
-		userService: service.NewUserService(),
+		userService: userService,
 		tokenPrefix: tokenPrefix,
 		secret:      secret,
 	}

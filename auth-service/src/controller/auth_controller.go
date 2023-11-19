@@ -2,23 +2,20 @@ package controller
 
 import (
 	"auth-service/src/dto"
-	"auth-service/src/service"
-	"auth-service/src/service/service_interface"
+	"auth-service/src/service/service_i"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type AuthController struct {
 	*BaseController
-	service     service_interface.AuthServiceInterface
-	userService service_interface.UserServiceInterface
+	authService service_i.AuthServiceI
 }
 
-func NewAuthController() *AuthController {
+func NewAuthController(authService service_i.AuthServiceI) *AuthController {
 	return &AuthController{
 		BaseController: NewBaseController(),
-		service:        service.NewAuthService(),
-		userService:    service.NewUserService(),
+		authService:    authService,
 	}
 }
 
@@ -37,7 +34,7 @@ func (this *AuthController) Login(c echo.Context) error {
 		return err
 	}
 
-	token, err := this.service.Login(&request)
+	token, err := this.authService.Login(&request)
 	if err != nil {
 		return err
 	}
@@ -60,7 +57,7 @@ func (this *AuthController) Me(c echo.Context) error {
 		return err
 	}
 
-	user, err = this.userService.GetById(user.ID)
+	user, err = this.authService.GetUserById(user.ID)
 	if err != nil {
 		return err
 	}

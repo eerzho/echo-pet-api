@@ -1,6 +1,6 @@
-package service_interface
+package service_i
 
-type JWTServiceInterface interface {
+type JWTServiceI interface {
 	GenerateToken(id uint) (string, error)
 	GenerateHash(word string) (string, error)
 	IsEqual(hash, word string) bool
